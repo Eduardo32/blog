@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    {% load taggit_templatetags2_tags %}
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        {% for Post in Posts %}
+            <img src="{{Post.thumb.url}}" alt="Um teste"><br>
+            <a href="{% url 'posts:detalhe' Post.slug %}">{{ Post.titulo }}</a></br>
+            Por: {{ Post.autor }} Em: {{ Post.data_postagem }}</br>
+            {% get_tags_for_object Post as "tags" %}
+            {% for tag in tags %}
+                {{ tag }}
+            {% endfor %}
+            </br>
+            {% if user.is_authenticated and user.id == Post.autor.id %}
+                <a href="#">Editar</a> <a href="#">Excluir</a></br>
+            {% endif %}
+            </br>
+        {% endfor %}
+    </body>
+</html>

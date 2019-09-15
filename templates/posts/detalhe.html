@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    {% load taggit_templatetags2_tags %}
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <img src="{{Post.thumb.url}}" alt="Um teste"><br>
+        <h1>{{ Post.titulo }}</h1>
+        <h2>{{ Post.sub_titulo }}</h2>
+        Por: {{ Post.autor }}</br>
+        Postado em: {{ Post.data_postagem }}</br>
+        {% if Post.data_atualizacao != NULL %}
+            Atualizado em: {{ Post.data_atualizacao }}</br>
+        {% endif %}
+        <p>{{ Post.descricao }}</p>
+        {% get_tags_for_object Post as "tags" %}
+        {% for tag in tags %}
+            {{ tag }}
+        {% endfor %}
+        <br><br>
+        {% if user.is_authenticated and user.id == Post.autor.id %}
+            <a href="#">Editar</a> <a href="#">Excluir</a></br>
+        {% endif %}
+    </body>
+</html>

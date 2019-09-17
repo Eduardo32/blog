@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    {% load taggit_templatetags2_tags %}
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h1>Tem certeza que deseja excluir o post {{ Post.titulo }}</h1>
+            <a href="{% url 'posts:lista' %}">Cancelar</a>
+            <button type="submit">Excluir</button>
+        </form>
+    </body>
+</html>

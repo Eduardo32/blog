@@ -6,17 +6,21 @@
         <title>Title</title>
     </head>
     <body>
+        {% if user.is_authenticated %}
+            <a href="{% url 'posts:novo' %}">Novo Post</a></br></br>
+        {% endif %}
         {% for Post in Posts %}
-            <img src="{{Post.thumb.url}}" alt="Um teste"><br>
+            <img src="{{ Post.thumb.url }}" alt="Um teste"></br>
             <a href="{% url 'posts:detalhe' Post.slug %}">{{ Post.titulo }}</a></br>
-            Por: {{ Post.autor }} Em: {{ Post.data_postagem }}</br>
+            Por: {{ Post.autor.first_name }} {{ Post.autor.last_name }}</br>
+            Postado em: {{ Post.data_postagem }}</br>
             {% get_tags_for_object Post as "tags" %}
             {% for tag in tags %}
                 {{ tag }}
             {% endfor %}
             </br>
             {% if user.is_authenticated and user.id == Post.autor.id %}
-                <a href="#">Editar</a> <a href="#">Excluir</a></br>
+                <a href="{% url 'posts:edita' Post.slug %}">Editar</a> <a href="{% url 'posts:exclui' Post.slug %}">Excluir</a></br>
             {% endif %}
             </br>
         {% endfor %}

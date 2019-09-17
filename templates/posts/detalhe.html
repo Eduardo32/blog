@@ -21,7 +21,7 @@
         {% endfor %}
         <br><br>
         {% if user.is_authenticated and user.id == Post.autor.id %}
-            <a href="#">Editar</a> <a href="#">Excluir</a></br>
+            <a href="{% url 'posts:edita' Post.slug %}">Editar</a> <a href="{% url 'posts:exclui' Post.slug %}">Excluir</a></br>
         {% endif %}
     </body>
 </html>

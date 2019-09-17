@@ -29,7 +29,7 @@ class Post(models.Model):
     )
 
     data_postagem = models.DateTimeField(
-        auto_now=True,
+        auto_now_add=True,
         blank=False,
         null=False,
     )

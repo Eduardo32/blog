@@ -1,28 +1,31 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    {% load taggit_templatetags2_tags %}
-    <head>
-        <meta charset="UTF-8">
-        <title>Title</title>
-    </head>
-    <body>
-        {% if user.is_authenticated %}
-            <a href="{% url 'posts:novo' %}">Novo Post</a></br></br>
-        {% endif %}
-        {% for Post in Posts %}
-            <img src="{{ Post.thumb.url }}" alt="Um teste"></br>
-            <a href="{% url 'posts:detalhe' Post.slug %}">{{ Post.titulo }}</a></br>
-            Por: {{ Post.autor.first_name }} {{ Post.autor.last_name }}</br>
-            Postado em: {{ Post.data_postagem }}</br>
-            {% get_tags_for_object Post as "tags" %}
-            {% for tag in tags %}
-                {{ tag }}
-            {% endfor %}
-            </br>
-            {% if user.is_authenticated and user.id == Post.autor.id %}
-                <a href="{% url 'posts:edita' Post.slug %}">Editar</a> <a href="{% url 'posts:exclui' Post.slug %}">Excluir</a></br>
-            {% endif %}
-            </br>
+{% extends '_layouts/base.html' %}
+
+{% load taggit_templatetags2_tags %}
+
+{% block title %}Titulo do Blog{% endblock %}
+
+{% block conteudo %}
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'posts:novo' %}">Novo Post</a></br></br>
+    {% endif %}
+
+    {% for Post in Posts %}
+
+        <img src="{{ Post.thumb.url }}" alt="{{ Post.thumb_descricao }}"></br>
+        <a href="{% url 'posts:detalhe' Post.slug %}">{{ Post.titulo }}</a></br>
+        Por: {{ Post.autor.first_name }} {{ Post.autor.last_name }}</br>
+        Postado em: {{ Post.data_postagem }}</br>
+        {% get_tags_for_object Post as "tags" %}
+        {% for tag in tags %}
+            {{ tag }}
         {% endfor %}
-    </body>
-</html>
+        </br>
+        {% if user.is_authenticated and user.id == Post.autor.id %}
+            <a href="{% url 'posts:edita' Post.slug %}">Editar</a> <a href="{% url 'posts:exclui' Post.slug %}">Excluir</a></br>
+        {% endif %}
+        </br>
+
+    {% endfor %}
+
+{% endblock %}

@@ -19,6 +19,12 @@ class Post(models.Model):
 
     thumb = models.ImageField(upload_to='thumbs/%Y/%m/%d')
 
+    thumb_descricao = models.CharField(
+        max_length=20,
+        blank=False,
+        null=False,
+    )
+
     descricao = models.TextField(
         blank=False,
         null=False,
